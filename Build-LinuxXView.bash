@@ -11,7 +11,7 @@
 
 [ $# -gt 0 ] && set -e
 
-ARCH=`uname -p`
+ARCH=$(uname -p)
 if [ "x${ARCH}" = "xx86_64" ]; then
 	EXTRAFLAGS="-Wimplicit -D_XV_API_BROKEN_64BIT"
 else
@@ -41,10 +41,10 @@ cat > imake.append <<EOF
 
 # Variable-definitions appended by imake-wrapper
   XVDESTDIR      = $OWDEST
-  EXTRA_DEFINES  = -DOPENWINHOME_DEFAULT=\"$OPENWINHOME\" -D_GNU_SOURCE $EXTRAFLAGS
+  EXTRA_DEFINES  = -DOPENWINHOME_DEFAULT=\"$OPENWINHOME\" -D_DEFAULT_SOURCE -DSYSV_UCONTEXT $EXTRAFLAGS
   CONFIGDIR      = $OPENWINHOME/lib/config
-  INCLUDES      := -I`pwd`/build/include $IMAKE_EXTRA_INCLUDES -I$OWDEST/include \$(INCLUDES)
-  LOCAL_LDFLAGS := -L`pwd`/lib/libolgx -L`pwd`/lib/libxview $IMAKE_EXTRA_LOCAL_LDFLAGS -L$OWDEST/lib \$(LOCAL_LDFLAGS)
+  INCLUDES      := -I`pwd`/build/include $IMAKE_EXTRA_INCLUDES -I$OWDEST/include \$(INCLUDES) -I/usr/include/tirpc
+  LOCAL_LDFLAGS := -L`pwd`/lib/libolgx -L`pwd`/lib/libxview -ltirpc $IMAKE_EXTRA_LOCAL_LDFLAGS -L$OWDEST/lib \$(LOCAL_LDFLAGS)
   MAKEOVERRIDES  =
   CFLAGS        += -g \$(EXTRA_CFLAGS)
 # End of variable-definitions appended by imake-wrapper

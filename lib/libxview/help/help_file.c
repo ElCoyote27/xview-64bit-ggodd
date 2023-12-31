@@ -33,6 +33,7 @@ static char     sccsid[] = "@(#)help_file.c 1.17 90/12/04";
 #define MAX_MORE_HELP_CMD 128
 
 static int help_search_file(char *key, char **more_help);
+Xv_private char *xv_strtok();
 
 static FILE    *help_file;
 static char     help_buffer[128];
